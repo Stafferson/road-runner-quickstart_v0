@@ -1,11 +1,13 @@
-package org.firstinspires.ftc.teamcode.drive.opmode;
+package org.firstinspires.ftc.teamcode.drive.opmode.main.test;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.drive.IntakeConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 /*
@@ -29,10 +31,23 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class BackAndForth extends LinearOpMode {
 
     public static double DISTANCE = 50;
+    Servo sSlider, sRotator, sFlipperR, sFlipperL, sClaw;
 
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        sClaw = hardwareMap.servo.get("Claw");
+        sSlider = hardwareMap.servo.get("Slider");
+        sFlipperR = hardwareMap.servo.get("Flipper_right");
+        sFlipperL = hardwareMap.servo.get("Flipper_left");
+        sRotator = hardwareMap.servo.get("Rotator");
+
+        sSlider.setPosition(IntakeConstants.SLIDER_CLOSE);
+        sClaw.setPosition(IntakeConstants.CLAW_CLOSE);
+        sFlipperL.setPosition(IntakeConstants.FLIPPER_LEFT_STANDART);
+        sFlipperR.setPosition(IntakeConstants.FLIPPER_RIGHT_STANDART);
+        sRotator.setPosition(IntakeConstants.ROTATOR_UPSIDE_DOWN);
 
         Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
                 .forward(DISTANCE)

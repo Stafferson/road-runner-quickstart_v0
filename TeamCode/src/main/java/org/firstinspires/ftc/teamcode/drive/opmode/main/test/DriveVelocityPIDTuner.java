@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive.opmode;
+package org.firstinspires.ftc.teamcode.drive.opmode.main.test;
 
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ACCEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_VEL;
@@ -17,9 +17,11 @@ import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.drive.IntakeConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.util.List;
@@ -51,6 +53,8 @@ import java.util.List;
 @Config
 @Autonomous(group = "drive")
 public class DriveVelocityPIDTuner extends LinearOpMode {
+
+    Servo sSlider, sRotator, sFlipperR, sFlipperL, sClaw;
     public static double DISTANCE = 72; // in
 
     enum Mode {
@@ -70,6 +74,18 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
             RobotLog.setGlobalErrorMsg("%s does not need to be run if the built-in motor velocity" +
                     "PID is not in use", getClass().getSimpleName());
         }
+
+        sClaw = hardwareMap.servo.get("Claw");
+        sSlider = hardwareMap.servo.get("Slider");
+        sFlipperR = hardwareMap.servo.get("Flipper_right");
+        sFlipperL = hardwareMap.servo.get("Flipper_left");
+        sRotator = hardwareMap.servo.get("Rotator");
+
+        sSlider.setPosition(IntakeConstants.SLIDER_CLOSE);
+        sClaw.setPosition(IntakeConstants.CLAW_CLOSE);
+        sFlipperL.setPosition(IntakeConstants.FLIPPER_LEFT_STANDART);
+        sFlipperR.setPosition(IntakeConstants.FLIPPER_RIGHT_STANDART);
+        sRotator.setPosition(IntakeConstants.ROTATOR_UPSIDE_DOWN);
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
